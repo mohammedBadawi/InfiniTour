@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context="cat.code.com.infinitour.Activities.user_interface">
+
+   <android.support.v7.widget.AppCompatAutoCompleteTextView
+       android:id="@+id/auto_select_country"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:completionThreshold="1"
+       android:hint="select a country" />
+   <Button
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:hint="Go"
+       android:id="@+id/btnbtn"
+       android:layout_marginTop="30dp"/>
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:text="Select City"
+       android:id="@+id/tv_select_city"
+       android:visibility="invisible"
+       android:layout_marginTop="50dp"/>
+<ListView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/lv_cities"
+    android:layout_marginTop="20dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+
+</ListView>
+
+
+
+
+</LinearLayout>
