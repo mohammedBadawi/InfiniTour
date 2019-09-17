@@ -29,23 +29,25 @@ public class Choose_TourGuide extends AppCompatActivity {
     ArrayList<String>langs;
     TourGuide_Adapter adapter;
     ListView listView;
+    String language;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose__tour_guide);
         try {
-
-
+        Intent i=getIntent();
+        langs=new ArrayList<>();
+        langs=i.getStringArrayListExtra("langs");
         get_guides();
         Intent intent=getIntent();
         country=intent.getStringExtra("country");
         city=intent.getStringExtra("city");
-        get_user_langs();
+       // get_user_langs();
         adapter=new TourGuide_Adapter(Choose_TourGuide.this,R.layout.tourguides_row,guides_list,country,city,langs);
         listView=(ListView)findViewById(R.id.lv_tourguides);
         listView.setAdapter(adapter);}
         catch (Exception e){
-            Toast.makeText(Choose_TourGuide.this,e.toString(),Toast.LENGTH_LONG);
+            Toast.makeText(Choose_TourGuide.this,e.toString(),Toast.LENGTH_LONG).show();
         }
 
     }
@@ -53,7 +55,7 @@ public class Choose_TourGuide extends AppCompatActivity {
 
 
 
-    private void get_user_langs(){
+  /*  private void get_user_langs(){
         user= FirebaseAuth.getInstance().getCurrentUser();
         myRef=FirebaseDatabase.getInstance().getReference().child("Tourist").child(user.getUid()).child("languages");
         langs=new ArrayList<>();
@@ -62,6 +64,7 @@ public class Choose_TourGuide extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     langs.add(postSnapshot.getValue().toString());
+                    language=postSnapshot.getValue().toString();
                     Toast.makeText(Choose_TourGuide.this,langs.get(0),Toast.LENGTH_LONG).show();
                     adapter.notifyDataSetChanged();
                 }
@@ -69,10 +72,12 @@ public class Choose_TourGuide extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(Choose_TourGuide.this,databaseError.toString(),Toast.LENGTH_LONG).show();
+
             }
 
         });
-    }
+    }*/
 
    private void get_guides(){
         guides_list=new ArrayList<>();
@@ -95,7 +100,8 @@ public class Choose_TourGuide extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(Choose_TourGuide.this,"Connection Error",Toast.LENGTH_LONG).show();
+                Toast.makeText(Choose_TourGuide.this,databaseError.toString(),Toast.LENGTH_LONG).show();
+
 
             }
 

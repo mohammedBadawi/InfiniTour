@@ -42,5 +42,6 @@ public class City_Adapter_listview extends ArrayAdapter<String> {
 
         return view;
     }
+
 }
 

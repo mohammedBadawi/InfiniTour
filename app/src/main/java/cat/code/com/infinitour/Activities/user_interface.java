@@ -1,6 +1,7 @@
 package cat.code.com.infinitour.Activities;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,15 +41,23 @@ public class user_interface extends AppCompatActivity {
     ListView cities;
     TextView select_city;
     String city;
-
+    ArrayList<String>langs;
+    FirebaseUser user;
+    DatabaseReference myref;
+    ArrayList<String>langs_test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_interface);
+        langs=new ArrayList<>();
+        Intent i=getIntent();
+        get_user_langs();
+        langs=i.getStringArrayListExtra("langs");
         fill_countrylist();
         edittext = findViewById(R.id.auto_select_country);
         adapter = new Autocomplete_country_adapter(this, countrylist);
         edittext.setAdapter(adapter);
+
         cities = (ListView) findViewById(R.id.lv_cities);
         select_city = (TextView) findViewById(R.id.tv_select_city);
         btn = (Button) findViewById(R.id.btnbtn);
@@ -86,6 +97,8 @@ public class user_interface extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),Choose_TourGuide.class);
                 intent.putExtra("city",city);
                 intent.putExtra("country",edittext.getText().toString());
+                intent.putStringArrayListExtra("langs",langs_test);
+                test.clear();
                 startActivity(intent);
 
             }
@@ -110,6 +123,25 @@ public class user_interface extends AppCompatActivity {
         countrylist.add(new Countryitem("Algeria"));
         countrylist.add(new Countryitem("Mexico"));
     }
+    private void get_user_langs(){
+        langs_test=new ArrayList<>();
+        user= FirebaseAuth.getInstance().getCurrentUser();
+        String id=user.getUid();
+        myref=FirebaseDatabase.getInstance().getReference().child("Tourist").child(id).child("languages");
+        myref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                   langs_test.add(postSnapshot.getValue().toString());
+                   Toast.makeText(user_interface.this,langs_test.get(0),Toast.LENGTH_LONG).show();
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }

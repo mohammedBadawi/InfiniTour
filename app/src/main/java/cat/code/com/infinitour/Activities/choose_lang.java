@@ -104,9 +104,10 @@ public class choose_lang extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                            Intent intent=new Intent(choose_lang.this,user_interface.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             save_user_information(email,name,password,selected_items);
-                           startActivity(intent);
+                            intent.putStringArrayListExtra("langs",selected_items);
+                            startActivity(intent);
+                            finishAffinity();
                         } else {
                             if(task.getException() instanceof FirebaseAuthUserCollisionException){
                                 Toast.makeText(choose_lang.this,"you are already registered",Toast.LENGTH_LONG).show();

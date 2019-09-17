@@ -68,6 +68,8 @@ public class login extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(login.this,"signedin successful",Toast.LENGTH_LONG).show();
                             Intent intent=new Intent(login.this,user_interface.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            finishAffinity();
                             startActivity(intent);
 
                         } else {

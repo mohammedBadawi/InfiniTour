@@ -24,16 +24,16 @@ public class TourGuide_Adapter extends ArrayAdapter<TourGudie> {
     int resource;
     String country;
     String city;
-    ArrayList<String>langs;
+    ArrayList<String>language;
 
-    public TourGuide_Adapter(Context context, int resource ,ArrayList<TourGudie> item,String country,String city,ArrayList<String>langs) {
+    public TourGuide_Adapter(Context context, int resource ,ArrayList<TourGudie> item,String country,String city,ArrayList<String> language) {
         super(context, resource , item);
         this.context = context ;
         this.resource = resource ;
         this.item = item ;
         this.country = country ;
         this.city = city ;
-        this.langs = langs ;
+        this.language = language ;
     }
 
 
@@ -52,10 +52,11 @@ public class TourGuide_Adapter extends ArrayAdapter<TourGudie> {
         TextView age = view.findViewById(R.id.tv_tourguide_age);
         TextView lang = view.findViewById(R.id.tv_tourguide_language);
 
-        imageView.setImageResource(R.drawable.ic_launcher_background);
         name.setText(item.get(position).getName());
         age.setText(item.get(position).getAge()+" Years old");
-        lang.setText(langs.get(0));
+        if(language.size()==0)
+        lang.setText(" ");
+        else lang.setText(language.get(0));
 
         Glide.with(getContext())  //2
                 .load(item.get(position).getPhoto_url()) //3
